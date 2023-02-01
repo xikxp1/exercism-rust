@@ -11,17 +11,10 @@ pub struct Clock {
 
 impl Clock {
     pub fn new(hours: i32, minutes: i32) -> Self {
-        let mut ovl_minutes = (hours * MINUTES_IN_HOUR + minutes) % MINUTES_IN_DAY;
-        if ovl_minutes < 0 {
-            ovl_minutes += MINUTES_IN_DAY;
-        }
-        let mut new_minutes = ovl_minutes % MINUTES_IN_HOUR;
-        if new_minutes < 0 {
-            new_minutes += MINUTES_IN_HOUR;
-        }
+        let ovl_minutes = (hours * MINUTES_IN_HOUR + minutes).rem_euclid(MINUTES_IN_DAY);
         Clock {
-            hours: ovl_minutes / MINUTES_IN_HOUR,
-            minutes: new_minutes,
+            hours: ovl_minutes.div_euclid(MINUTES_IN_HOUR),
+            minutes: ovl_minutes.rem_euclid(MINUTES_IN_HOUR),
         }
     }
 
