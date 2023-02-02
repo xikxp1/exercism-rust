@@ -1,6 +1,25 @@
 pub fn brackets_are_balanced(string: &str) -> bool {
-    unimplemented!(
-        "Check if the string \"{}\" contains balanced brackets",
-        string
-    );
+    let mut stack = Vec::new();
+    for c in string.chars() {
+        match c {
+            '[' | '{' | '(' => stack.push(c),
+            ']' => {
+                if stack.pop() != Some('[') {
+                    return false;
+                }
+            },
+            '}' => {
+                if stack.pop() != Some('{') {
+                    return false;
+                }
+            }
+            ')' => {
+                if stack.pop() != Some('(') {
+                    return false;
+                }
+            }
+            _ => continue,
+        }
+    }
+    return stack.is_empty();
 }
